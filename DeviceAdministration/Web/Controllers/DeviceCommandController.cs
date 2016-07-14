@@ -140,10 +140,9 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Web.
 
             var device =  await _deviceLogic.GetDeviceAsync(deviceId);
             var keys = await _deviceLogic.GetIoTHubKeysAsync(deviceId);
-
+            var targetDeviceId = deviceId;
             var devicePrefix = _configurationProvider.GetConfigurationSettingValue("MbedPrefix");
-            var hubName = _configurationProvider.GetConfigurationSettingValue("iotHub.HostName");
-            var targetDeviceId = devicePrefix + deviceId;
+            var hubName = _configurationProvider.GetConfigurationSettingValue("iotHub.HostName").Split('.')[0];
             var payload = $"{targetDeviceId}:{hubName}:{keys.PrimaryKey}";
 
             dynamic command = new ExpandoObject();
