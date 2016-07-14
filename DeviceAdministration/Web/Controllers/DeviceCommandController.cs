@@ -142,12 +142,14 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Web.
             var keys = await _deviceLogic.GetIoTHubKeysAsync(deviceId);
 
             var devicePrefix = _configurationProvider.GetConfigurationSettingValue("MbedPrefix");
+            var hubName = _configurationProvider.GetConfigurationSettingValue("iotHub.HostName");
             var targetDeviceId = devicePrefix + deviceId;
+            var payload = $"{targetDeviceId}:{hubName}:{keys.PrimaryKey}";
 
             dynamic command = new ExpandoObject();
             command.MessageId = Guid.NewGuid().ToString();
             command.path = "/5/0/1";
-            command.new_value = keys.PrimaryKey;
+            command.new_value = payload;
             command.ep = devicePrefix + deviceId;
             command.coap_verb = "put";
 
