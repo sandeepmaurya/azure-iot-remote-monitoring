@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using AutoMapper;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.DeviceSchema;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Exceptions;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Helpers;
@@ -25,38 +26,44 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Web.
             // generic command view (like change device key, etc)
         };
 
+        private readonly IMapper _mapper;
         private readonly IDeviceLogic _deviceLogic;
         private readonly ICommandParameterTypeLogic _commandParameterTypeLogic;
 
-        public DeviceCommandController(IDeviceLogic deviceLogic, ICommandParameterTypeLogic commandParameterTypeLogic)
+        public DeviceCommandController(
+            IDeviceLogic deviceLogic, 
+            ICommandParameterTypeLogic commandParameterTypeLogic, 
+            IMapper mapper)
         {
             _deviceLogic = deviceLogic;
             _commandParameterTypeLogic = commandParameterTypeLogic;
+            _mapper = mapper;
         }
 
         [RequirePermission(Permission.ViewDevices)]
         public async Task<ActionResult> Index(string deviceId)
         {
             dynamic device = await _deviceLogic.GetDeviceAsync(deviceId);
+            var viewModel = _mapper.Map<DeviceCommandViewModel>(device);
 
-            List<SelectListItem> commandListItems = CommandListItems(device);
+            //List<SelectListItem> commandListItems = CommandListItems(device);
 
-            bool deviceIsEnabled = DeviceSchemaHelper.GetHubEnabledState(device) == true;
-            var deviceCommandsModel = new DeviceCommandModel
-            {
-                CommandHistory = new List<dynamic>(CommandHistorySchemaHelper.GetCommandHistory(device)),
-                CommandsJson = JsonConvert.SerializeObject(device.Commands),
-                SendCommandModel = new SendCommandModel
-                {
-                    DeviceId = DeviceSchemaHelper.GetDeviceID(device),
-                    CommandSelectList = commandListItems,
-                    CanSendDeviceCommands = deviceIsEnabled &&
-                        PermsChecker.HasPermission(Permission.SendCommandToDevices)
-                },
-                DeviceId = DeviceSchemaHelper.GetDeviceID(device)
-            };
+            //bool deviceIsEnabled = DeviceSchemaHelper.GetHubEnabledState(device) == true;
+            //var deviceCommandsModel = new DeviceCommandViewModel
+            //{
+            //    CommandHistory = new DeviceCommandHistoryEntryModel[] { }, //CommandHistorySchemaHelper.GetCommandHistory(device)),
+            //    CommandsJson = JsonConvert.SerializeObject(device.Commands),
+            //    SendCommandModel = new SendCommandModel
+            //    {
+            //        DeviceId = DeviceSchemaHelper.GetDeviceID(device),
+            //        CommandSelectList = commandListItems,
+            //        CanSendDeviceCommands = deviceIsEnabled &&
+            //            PermsChecker.HasPermission(Permission.SendCommandToDevices)
+            //    },
+            //    DeviceId = DeviceSchemaHelper.GetDeviceID(device)
+            //};
 
-            return View(deviceCommandsModel);
+            return View(viewModel);
         }
 
         [HttpPost]

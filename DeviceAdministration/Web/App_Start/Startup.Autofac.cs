@@ -12,6 +12,8 @@ using Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Web.Help
 using Owin;
 using System.Reflection;
 using System.Web.Mvc;
+using AutoMapper;
+using IConfigurationProvider = Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Configurations.IConfigurationProvider;
 
 namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Web
 {
@@ -53,6 +55,9 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Web
     {
         protected override void Load(ContainerBuilder builder)
         {
+            //Register automapper
+            builder.RegisterInstance(Mapper.Instance);
+
             //Logic
             builder.RegisterType<KeyLogic>().As<IKeyLogic>();
             builder.RegisterType<DeviceLogic>().As<IDeviceLogic>();
@@ -61,10 +66,8 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Web
             builder.RegisterType<SecurityKeyGenerator>().As<ISecurityKeyGenerator>();
             builder.RegisterType<ActionMappingLogic>().As<IActionMappingLogic>();
             builder.RegisterType<ActionLogic>().As<IActionLogic>();
-
             builder.RegisterInstance(CommandParameterTypeLogic.Instance).As<ICommandParameterTypeLogic>();
             builder.RegisterType<DeviceTelemetryLogic>().As<IDeviceTelemetryLogic>();
-
             builder.RegisterType<AlertsLogic>().As<IAlertsLogic>();
 
             //Repositories

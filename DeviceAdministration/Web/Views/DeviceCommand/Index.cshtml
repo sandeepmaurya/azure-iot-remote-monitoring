@@ -3,18 +3,13 @@
 @using Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Web.Helpers
 @using GlobalResources
 @using Newtonsoft.Json
-@model Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Web.Models.DeviceCommandModel
+@model Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Web.Models.DeviceCommandViewModel
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutNoNavigation.cshtml";
 
     DateTime? resolvedTime;
-
-    bool canSendCommands =
-        Model.SupportDeviceCommand &&
-        (Model.SendCommandModel != null) &&
-        Model.SendCommandModel.CanSendDeviceCommands;
 }
 
 <header class="header_main">
@@ -44,7 +39,7 @@
                         <th>@Strings.CommandValuesSent</th>
                         <th>@Strings.CommandTimeCreated</th>
                         <th>@Strings.CommandTimeUpdated</th>
-                        @if (canSendCommands)
+                        @if (Model.CanSendComamnds)
                         {
                             <th></th>
                         }
@@ -85,7 +80,7 @@
                                 }
 
                             </td>
-                            @if (canSendCommands)
+                            @if (Model.CanSendComamnds)
                             {
                                 <td>
                                     @{

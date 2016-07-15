@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Web.
         /// <returns>
         /// A set of <paramref name="model" />'s supported Command names.
         /// </returns>
-        public static HashSet<string> BuildAvailableCommandNameSet(DeviceCommandModel model)
+        public static HashSet<string> BuildAvailableCommandNameSet(DeviceCommandViewModel model)
         {
             if (model == null)
             {

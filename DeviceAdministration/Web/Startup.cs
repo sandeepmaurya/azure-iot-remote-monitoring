@@ -14,6 +14,7 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Web
             ConfigurationProvider configProvider = new ConfigurationProvider();
 
             ConfigureAuth(app, configProvider);
+            ConfigureAutoMapper(app);
             ConfigureAutofac(app);
 
             // WebAPI call must come after Autofac

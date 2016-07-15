@@ -77,6 +77,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Autofac.WebApi2.Owin.3.3.0\lib\net45\Autofac.Integration.WebApi.Owin.dll</HintPath>
     </Reference>
+    <Reference Include="AutoMapper, Version=5.0.2.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\AutoMapper.5.0.2\lib\net45\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="dotless.Core, Version=1.5.2.0, Culture=neutral, PublicKeyToken=96b446c9e63eae34, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\dotless.1.5.2\lib\dotless.Core.dll</HintPath>
@@ -257,6 +261,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\Strings.sv.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Strings.sv.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\Startup.Json.cs" />
     <Compile Include="App_Start\Startup.Autofac.cs" />
     <Compile Include="App_Start\Startup.WebApi.cs" />
@@ -285,6 +294,8 @@
     <Compile Include="Helpers\MvcDataHelper.cs" />
     <Compile Include="Models\ActionPropertiesModel.cs" />
     <Compile Include="Models\AlertHistoryDeviceModel.cs" />
+    <Compile Include="Models\DeviceCommandHistoryEntryModel.cs" />
+    <Compile Include="Models\DeviceCommandModel.cs" />
     <Compile Include="Models\EditDeviceRuleModel.cs" />
     <Compile Include="Models\LanguageModel.cs" />
     <Compile Include="Models\SimInformationViewModel.cs" />
@@ -298,7 +309,7 @@
     <Compile Include="Models\UnregisteredDeviceModel.cs" />
     <Compile Include="Models\RegisteredDeviceModel.cs" />
     <Compile Include="Models\CommandModel.cs" />
-    <Compile Include="Models\DeviceCommandModel.cs" />
+    <Compile Include="Models\DeviceCommandViewModel.cs" />
     <Compile Include="Models\DeviceDetailModel.cs" />
     <Compile Include="Models\DeviceDetailsKeysModel.cs" />
     <Compile Include="Models\DeviceKeysModel.cs" />
@@ -425,6 +436,7 @@
     <Content Include="Content\styles\bootstrap\mixins\text-emphasis.less" />
     <Content Include="Content\styles\bootstrap\mixins\text-overflow.less" />
     <Content Include="Content\styles\bootstrap\mixins\vendor-prefixes.less" />
+    <Compile Include="App_Start\Startup.Automapper.cs" />
     <None Include="Scripts\jquery-2.2.3.intellisense.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-2.2.3.js" />
